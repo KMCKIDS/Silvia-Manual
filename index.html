@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>란실리오 실비아 프로 X — 인포그래픽 매뉴얼</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --accent: #e94560;
+    --accent2: #0f3460;
+    --accent3: #16213e;
+    --gold: #f5c518;
+    --warm: #ff6b35;
+    --cool: #00b4d8;
+    --mint: #2ec4b6;
+    --bg: #f8f9fc;
+    --card: #ffffff;
+    --text: #2d3436;
+    --muted: #636e72;
+    --border: #e9ecef;
+    --shadow: 0 4px 24px rgba(0,0,0,0.06);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,0.1);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent3) 40%, var(--accent2) 100%);
+    color: #fff;
+    padding: 80px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(233,69,96,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(0,180,216,0.1) 0%, transparent 50%);
+    animation: heroFloat 20s ease-in-out infinite;
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-2%, 2%) rotate(1deg); }
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    color: rgba(255,255,255,0.85);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ── NAV PILLS ── */
+  .nav-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-sticky::-webkit-scrollbar { display: none; }
+  .nav-inner {
+    display: flex;
+    gap: 8px;
+    max-width: 900px;
+    margin: 0 auto;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+  .nav-pill {
+    flex-shrink: 0;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nav-pill:hover, .nav-pill.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(26,26,46,0.25);
+  }
+
+  /* ── MAIN ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 20px; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 60px; scroll-margin-top: 80px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .section-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+    display: block;
+  }
+
+  /* ── ENTRY METHOD CARD ── */
+  .entry-card {
+    background: linear-gradient(135deg, var(--accent2), var(--accent3));
+    color: #fff;
+    padding: 28px 32px;
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--shadow-lg);
+  }
+  .entry-card .entry-icon { font-size: 40px; flex-shrink: 0; }
+  .entry-card .entry-text { font-size: 15px; line-height: 1.6; }
+  .entry-card strong { color: var(--gold); }
+  .entry-card .kbd {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 2px;
+  }
+
+  /* ── FUNCTION GRID ── */
+  .func-grid-top {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .func-grid-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .func-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .func-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+  }
+  .func-grid-top .func-card {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .func-code {
+    min-width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+    font-family: 'Inter', monospace;
+  }
+  .func-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .func-info p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* Color sets */
+  .clr-red { background: linear-gradient(135deg, #e94560, #c0392b); }
+  .clr-blue { background: linear-gradient(135deg, #0f3460, #1a5276); }
+  .clr-teal { background: linear-gradient(135deg, #2ec4b6, #1abc9c); }
+  .clr-purple { background: linear-gradient(135deg, #6c5ce7, #8e44ad); }
+  .clr-orange { background: linear-gradient(135deg, #ff6b35, #e67e22); }
+  .clr-gold { background: linear-gradient(135deg, #f5c518, #f39c12); }
+  .clr-navy { background: linear-gradient(135deg, #16213e, #2c3e50); }
+  .clr-pink { background: linear-gradient(135deg, #fd79a8, #e84393); }
+  .clr-green { background: linear-gradient(135deg, #00b894, #27ae60); }
+  .clr-sky { background: linear-gradient(135deg, #00b4d8, #0984e3); }
+
+  /* ── ERROR TABLE ── */
+  .error-group { margin-bottom: 20px; }
+  .error-group-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .error-group-title .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .error-list { display: flex; flex-direction: column; gap: 8px; }
+  .error-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.3s;
+  }
+  .error-item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow);
+  }
+  .error-code {
+    font-family: 'Inter', monospace;
+    font-size: 14px;
+    font-weight: 800;
+    min-width: 50px;
+    color: var(--accent);
+  }
+  .error-desc { font-size: 14px; flex: 1; }
+  .error-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .badge-yellow { background: #fff3cd; color: #856404; }
+  .badge-orange { background: #ffe0cc; color: #c0392b; }
+  .badge-red { background: #f8d7da; color: #721c24; }
+
+  /* ── BACKFLUSH STEPS ── */
+  .steps-timeline { position: relative; padding-left: 36px; }
+  .steps-timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), var(--cool), var(--mint));
+    border-radius: 3px;
+  }
+  .step-item {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: all 0.3s;
+  }
+  .step-item:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateX(4px);
+  }
+  .step-number {
+    position: absolute;
+    left: -36px;
+    top: 24px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .step-item h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-item h4 .step-tag {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 50px;
+    color: #fff;
+    font-family: 'Inter', monospace;
+  }
+  .step-item p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* ── BREW BUTTON ── */
+  .brew-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .brew-row {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--border);
+  }
+  .brew-row:last-child { border-bottom: none; }
+  .brew-icon-area {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+  .brew-content { padding: 24px; flex: 1; }
+  .brew-content h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .brew-content p { font-size: 14px; color: var(--muted); }
+  .brew-action {
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 14px;
+    border-radius: 50px;
+    color: #fff;
+  }
+
+  /* ── RESET ── */
+  .reset-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+  .reset-step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+    text-align: center;
+    min-width: 170px;
+    flex: 1;
+    transition: all 0.3s;
+  }
+  .reset-step:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .reset-step .rs-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .reset-step .rs-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+  .reset-step p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .reset-arrow {
+    font-size: 24px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* ── TIP BOX ── */
+  .tip-box {
+    background: linear-gradient(135deg, #fff9e6, #fff3cd);
+    border: 1px solid #f5c518;
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 40px;
+  }
+  .tip-box .tip-icon { font-size: 24px; flex-shrink: 0; }
+  .tip-box p { font-size: 14px; line-height: 1.7; color: #856404; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .func-grid-bottom { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .entry-card { flex-direction: column; text-align: center; padding: 24px; }
+    .func-grid-top { grid-template-columns: 1fr; }
+    .func-grid-bottom { grid-template-columns: repeat(2, 1fr); }
+    .brew-row { flex-direction: column; }
+    .brew-icon-area { width: 100%; height: 60px; }
+    .reset-flow { flex-direction: column; }
+    .reset-arrow { transform: rotate(90deg); }
+    .nav-inner { justify-content: flex-start; }
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Infographic Manual</div>
+    <h1>란실리오 <span>실비아 프로 X</span></h1>
+    <p>기능 설정부터 에러 코드, 백플러싱까지 — 한눈에 보는 완벽 가이드</p>
+  </div>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="nav-sticky">
+  <div class="nav-inner">
+    <a href="#settings" class="nav-pill active">⚙️ 기능 설정</a>
+    <a href="#errors" class="nav-pill">🚨 상태 코드</a>
+    <a href="#backflush" class="nav-pill">🧹 백플러싱</a>
+    <a href="#brew" class="nav-pill">☕ 추출버튼</a>
+    <a href="#reset" class="nav-pill">🔄 초기화</a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <!-- ═══════════ SECTION 1: 기능 설정 ═══════════ -->
+  <section class="section fade-up" id="settings">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;">⚙️</div>
+      <div>
+        <span class="section-title">기능 설정 / 변경</span>
+        <span class="section-sub">머신의 다양한 파라미터를 커스터마이징하세요</span>
+      </div>
+    </div>
+
+    <div class="entry-card">
+      <div class="entry-icon">👆</div>
+      <div class="entry-text">
+        <strong>진입 방법:</strong> <span class="kbd">− 버튼</span> 과 <span class="kbd">+ 버튼</span> 을 <strong>동시에 3초 이상</strong> 길게 누르세요
+      </div>
+    </div>
+
+    <!-- 상단: t1, t2 (2열 — 가로형 카드) -->
+    <div class="func-grid-top">
+      <div class="func-card">
+        <div class="func-code clr-red">t1</div>
+        <div class="func-info">
+          <h4>커피 추출 온도</h4>
+          <p>커피 보일러의 추출 온도를 원하는 값으로 변경합니다</p>
+        </div>
+      </div>
+      <div class="func-card">
+        <div class="func-code clr-blue">t2</div>
+        <div class="func-info">
+          <h4>스팀 보일러 온도</h4>
+          <p>스팀 보일러의 온도를 변경합니다</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단: F.01~F.08 (4열 × 2줄 — 세로형 카드) -->
+    <div class="func-grid-bottom">
+      <div class="func-card">
+        <div class="func-code clr-teal">F.01</div>
+        <div class="func-info">
+          <h4>그룹 헤드 청소</h4>
+          <p>3단계 백플러싱 세척</p>
+        </div>
+      </div>
+      <div class="func-card">
+        <div class="func-code clr-purple">F.02</div>
+        <div class="func-info">
+          <h4>절전 깨우기 시간</h4>
+          <p>절전 해제 타이머 설정</p>
+        </div>
+      </div>
+      <div class="func-card">
+        <div class="func-code clr-orange">F.03</div>
+        <div class="func-info">
+          <h4>커피 보일러 비우기</h4>
+          <p>커피 보일러 물 배수</p>
+        </div>
+      </div>
+      <div class="func-card">
+        <div class="func-code clr-sky">F.04</div>
+        <div class="func-info">
+          <h4>스팀 보일러 비우기</h4>
+          <p>스팀 보일러 물 배수</p>
+        </div>
+      </div>
+      <div class="func-card">
+        <div class="func-code clr-green">F.05</div>
+        <div class="func-info">
+          <h4>절전 관리</h4>
+          <p>15 / 30 / 60 / 120분</p>
+        </div>
+      </div>
+      <div class="func-card">
+        <div class="func-code clr-gold">F.06</div>
+        <div class="func-info">
+          <h4>온도 단위 선택</h4>
+          <p>섭씨(℃) ↔ 화씨(℉)</p>
+        </div>
+      </div>
+      <div class="func-card">
+        <div class="func-code clr-navy">F.07</div>
+        <div class="func-info">
+          <h4>전압 선택</h4>
+          <p>230V 또는 110V</p>
+        </div>
+      </div>
+      <div class="func-card">
+        <div class="func-code clr-pink">F.08</div>
+        <div class="func-info">
+          <h4>소프트 인퓨전</h4>
+          <p>최대 6초 프리인퓨전</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 2: 상태 코드 ═══════════ -->
+  <section class="section fade-up" id="errors">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#e94560,#c0392b);color:#fff;">🚨</div>
+      <div>
+        <span class="section-title">상태 코드 (에러)</span>
+        <span class="section-sub">디스플레이에 표시되는 에러 코드와 대처법</span>
+      </div>
+    </div>
+
+    <div class="error-group">
+      <div class="error-group-title"><div class="dot" style="background:#f5c518;"></div> 물 관련</div>
+      <div class="error-list">
+        <div class="error-item">
+          <span class="error-code">H20</span>
+          <span class="error-desc">물 부족 — 수조에 물을 보충하세요</span>
+          <span class="error-badge badge-yellow">물 보충</span>
+        </div>
+        <div class="error-item">
+          <span class="error-code">E01</span>
+          <span class="error-desc">스팀 보일러에 물 적재 시 이상현상 발견</span>
+          <span class="error-badge badge-orange">점검</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="error-group">
+      <div class="error-group-title"><div class="dot" style="background:#ff6b35;"></div> 예열 관련</div>
+      <div class="error-list">
+        <div class="error-item">
+          <span class="error-code">E02</span>
+          <span class="error-desc">커피 보일러가 예열되지 않습니다</span>
+          <span class="error-badge badge-red">수리 필요</span>
+        </div>
+        <div class="error-item">
+          <span class="error-code">E03</span>
+          <span class="error-desc">스팀 보일러가 예열되지 않습니다</span>
+          <span class="error-badge badge-red">수리 필요</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="error-group">
+      <div class="error-group-title"><div class="dot" style="background:#e94560;"></div> 과열 관련</div>
+      <div class="error-list">
+        <div class="error-item">
+          <span class="error-code">E04</span>
+          <span class="error-desc">커피 보일러 과열 — 즉시 전원을 차단하세요</span>
+          <span class="error-badge badge-red">긴급</span>
+        </div>
+        <div class="error-item">
+          <span class="error-code">E05</span>
+          <span class="error-desc">스팀 보일러 과열 — 즉시 전원을 차단하세요</span>
+          <span class="error-badge badge-red">긴급</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="error-group">
+      <div class="error-group-title"><div class="dot" style="background:#6c5ce7;"></div> 센서 관련</div>
+      <div class="error-list">
+        <div class="error-item">
+          <span class="error-code">E06</span>
+          <span class="error-desc">증기 보일러 온도 측정 중단됨</span>
+          <span class="error-badge badge-red">수리 필요</span>
+        </div>
+        <div class="error-item">
+          <span class="error-code">E07</span>
+          <span class="error-desc">증기 온도 센서 단락 (쇼트)</span>
+          <span class="error-badge badge-red">수리 필요</span>
+        </div>
+        <div class="error-item">
+          <span class="error-code">E08</span>
+          <span class="error-desc">커피 보일러 온도 측정 중단됨</span>
+          <span class="error-badge badge-red">수리 필요</span>
+        </div>
+        <div class="error-item">
+          <span class="error-code">E09</span>
+          <span class="error-desc">커피 온도 센서 단락 (쇼트)</span>
+          <span class="error-badge badge-red">수리 필요</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 3: 백플러싱 ═══════════ -->
+  <section class="section fade-up" id="backflush">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#2ec4b6,#1abc9c);color:#fff;">🧹</div>
+      <div>
+        <span class="section-title">F.01 백플러싱 청소</span>
+        <span class="section-sub">− 버튼과 + 버튼 동시 → F.01 기능 설정 메뉴 진입</span>
+      </div>
+    </div>
+
+    <div class="steps-timeline">
+      <div class="step-item">
+        <div class="step-number clr-red">1</div>
+        <h4><span class="step-tag clr-red">CL1</span> 세제 세척</h4>
+        <p>포타필터에 <strong>블라인드 바스켓</strong>을 장착하고, <strong>세척 약품</strong>을 넣은 뒤 체결합니다. 그런 다음 <strong>추출버튼</strong>을 누르세요.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-number clr-sky">2</div>
+        <h4><span class="step-tag clr-sky">CL2</span> 헤드 린스</h4>
+        <p>포타필터를 분리하고, 헤드그룹 아래에 <strong>물받이만</strong> 받혀 둡니다. 그 상태에서 <strong>추출버튼</strong>을 눌러 깨끗한 물로 헹굽니다.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-number clr-green">3</div>
+        <h4><span class="step-tag clr-green">CL3</span> 마무리 린스</h4>
+        <p>포타필터에 <strong>블라인드 바스켓</strong>을 장착하되, <strong>약품 없이</strong> 체결합니다. <strong>추출버튼</strong>을 눌러 잔여 세제를 완전히 제거하세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 4: 추출버튼 ═══════════ -->
+  <section class="section fade-up" id="brew">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#ff6b35,#e67e22);color:#fff;">☕</div>
+      <div>
+        <span class="section-title">추출버튼 사용방법</span>
+        <span class="section-sub">길게 또는 짧게 — 두 가지 조작 모드</span>
+      </div>
+    </div>
+
+    <div class="brew-card">
+      <div class="brew-row">
+        <div class="brew-icon-area" style="background:linear-gradient(135deg,#dfe6e9,#b2bec3);">💧</div>
+        <div class="brew-content">
+          <h4>물흘리기 모드</h4>
+          <p>추출버튼을 <strong>길게 누르고 있으면</strong> 누르는 동안 계속 물이 나옵니다. 손을 떼면 즉시 멈춥니다.</p>
+          <span class="brew-action" style="background:var(--cool);">길게 누르기</span>
+        </div>
+      </div>
+      <div class="brew-row">
+        <div class="brew-icon-area" style="background:linear-gradient(135deg,#ffeaa7,#fdcb6e);">☕</div>
+        <div class="brew-content">
+          <h4>에스프레소 추출 모드</h4>
+          <p><strong>짧게 한번 누르면</strong> 추출이 시작되고, 디스플레이에 경과시간(초: sec)이 표시됩니다. <strong>다시 한번 누르면</strong> 추출이 종료됩니다.</p>
+          <span class="brew-action" style="background:var(--warm);">짧게 클릭 × 2</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECTION 5: 펌웨어 초기화 ═══════════ -->
+  <section class="section fade-up" id="reset">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#6c5ce7,#8e44ad);color:#fff;">🔄</div>
+      <div>
+        <span class="section-title">펌웨어 초기화</span>
+        <span class="section-sub">공장 출하 상태로 모든 설정을 되돌립니다</span>
+      </div>
+    </div>
+
+    <div class="reset-flow">
+      <div class="reset-step">
+        <div class="rs-num">1</div>
+        <span class="rs-icon">👆</span>
+        <p><strong>− 버튼</strong>과 <strong>+ 버튼</strong>을 누른 상태에서<br><strong>전원 ON</strong></p>
+      </div>
+      <div class="reset-arrow">→</div>
+      <div class="reset-step">
+        <div class="rs-num">2</div>
+        <span class="rs-icon">📟</span>
+        <p>디스플레이에<br><strong>"PrS"</strong> 표시 확인</p>
+      </div>
+      <div class="reset-arrow">→</div>
+      <div class="reset-step">
+        <div class="rs-num">3</div>
+        <span class="rs-icon">🔌</span>
+        <p><strong>전원 OFF</strong></p>
+      </div>
+      <div class="reset-arrow">→</div>
+      <div class="reset-step">
+        <div class="rs-num">4</div>
+        <span class="rs-icon">✅</span>
+        <p>다시 <strong>전원 ON</strong><br>초기화 완료!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIP -->
+  <div class="tip-box fade-up">
+    <div class="tip-icon">💡</div>
+    <p><strong>TIP:</strong> 에러코드 <strong>E04 / E05</strong>(과열)가 표시되면 <strong>즉시 전원을 끄고</strong> 머신이 충분히 식을 때까지 기다린 뒤 재가동하세요. 동일 에러가 반복되면 반드시 공인 서비스 센터에 문의하시기 바랍니다.</p>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>란실리오 실비아 프로 X 인포그래픽 매뉴얼 · 원문 기반 재구성</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('.section, .tip-box');
+  const pills = document.querySelectorAll('.nav-pill');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      if (pageYOffset >= sectionTop) {
+        current = section.getAttribute('id') || '';
+      }
+    });
+    pills.forEach(pill => {
+      pill.classList.remove('active');
+      if (pill.getAttribute('href') === `#${current}`) {
+        pill.classList.add('active');
+      }
+    });
+  });
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(pill.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
